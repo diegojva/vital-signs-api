@@ -1,0 +1,60 @@
+//DATA PATIENT
+
+INSERT INTO patient(first_name,last_name, phone, dni, email) VALUES ('DIEGO','JOSE','963456781','12345678','abc@hotmail.com');
+INSERT INTO patient(first_name,last_name, phone, dni, email) VALUES ('DIANA','JOSE','963456781','12345678','abcdef@hotmail.com');
+INSERT INTO patient(first_name,last_name, phone, dni, email) VALUES ('JAIME','JOSE','963456781','12345678','abcdef@hotmail.com');
+INSERT INTO patient(first_name,last_name, phone, dni, email) VALUES ('DANIEL','JOSE','963456781','12345678','abcdefgt@hotmail.com');
+INSERT INTO patient(first_name,last_name, phone, dni, email) VALUES ('LUANA','JOSE','963456781','12345678','123ab@hotmail.com');
+INSERT INTO patient(first_name,last_name, phone, dni, email) VALUES ('JUAN','JOSE','963456781','12345678','123ab@hotmail.com');
+INSERT INTO patient(first_name,last_name, phone, dni, email) VALUES ('ALEXANDRA','JOSE','963456781','12345678','123ab@hotmail.com');
+INSERT INTO patient(first_name,last_name, phone, dni, email) VALUES ('PERCY','JOSE','963456781','12345678','123ab@hotmail.com');
+INSERT INTO patient(first_name,last_name, phone, dni, email) VALUES ('KOKE','JOSE','963456781','12345678','123ab@hotmail.com');
+INSERT INTO patient(first_name,last_name, phone, dni, email) VALUES ('MIGUEL','JOSE','963456781','12345678','123ab@hotmail.com');
+
+select * from patient;
+
+//OAUTH
+create table oauth_access_token (
+  token_id VARCHAR(256),
+  token bytea,
+  authentication_id VARCHAR(256),
+  user_name VARCHAR(256),
+  client_id VARCHAR(256),
+  authentication bytea,
+  refresh_token VARCHAR(256)
+);
+
+//CREATE USERS
+INSERT INTO user_data(id_user, username, password, enabled) values (1, 'xxyy@gmail.com', '$2a$12$8ldYCzcPRIA6HUzM//imm.UeF5saJA9ILnTRbZfbe1fGnzDI5WGe2', '1'); (pass = 123)
+INSERT INTO user_data(id_user, username, password, enabled) values (2, 'xxxyyy@gmail.com', '$2a$12$rFdZSG3x25VThOy3mvuFieQj6OdNQoAg8DyOKmoOrynqyboK35cse', '1'); (pass = 000)
+
+
+//ROLES
+INSERT INTO role (id_role, name, description) VALUES (1, 'ADMIN', 'Administrador');
+INSERT INTO role (id_role, name, description) VALUES (2, 'USER', 'Usuario');
+
+//USUARIO - ROLES
+INSERT INTO user_role (id_user, id_role) VALUES (1, 1);
+INSERT INTO user_role (id_user, id_role) VALUES (1, 2);
+INSERT INTO user_role (id_user, id_role) VALUES (2, 2);
+
+//CREATE MENUS
+
+INSERT INTO menu(id_menu, name, icon, url) VALUES (1, 'Dashboard', 'home', '/pages/dashboard');
+INSERT INTO menu(id_menu, name, icon, url) VALUES (2, 'Patient', 'emoji_people', '/pages/patient');
+INSERT INTO menu(id_menu, name, icon, url) VALUES (3, 'VitalSigns', 'favorite', '/pages/vital-signs');
+
+// MENUS - ROLES
+INSERT INTO menu_role(id_menu, id_role)VALUES(1,1);
+INSERT INTO menu_role(id_menu, id_role)VALUES(2,1);
+INSERT INTO menu_role(id_menu, id_role)VALUES(3,1);
+INSERT INTO menu_role(id_menu, id_role)VALUES(1,2);
+INSERT INTO menu_role(id_menu, id_role)VALUES(2,2);
+
+
+
+select m.* from menu_role mr 
+            inner join user_role ur on ur.id_role = mr.id_role 
+            inner join menu m on m.id_menu = mr.id_menu 
+            inner join user_data u on u.id_user = ur.id_user
+            where u.username = 'xxyy@gmail.com';
